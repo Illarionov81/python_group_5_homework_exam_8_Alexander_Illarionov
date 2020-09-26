@@ -26,7 +26,7 @@
             {% for i in avg_marks %}
                 {% for key, value in i.items %}
             {% if product.pk == key %}
-            <p>Средняя оценка: {{ value }}</p>
+            <p>Средняя оценка: {{ value | floatformat:"0" }}</p>
             {% endif %}
             {% endfor %}
                 {% endfor %}
@@ -35,16 +35,16 @@
         </div>
         <div class="col col-lg-5">
             <div class="row">
-{#                {% if perms.webapp.change_product %}#}
+                {% if perms.webapp.change_product %}
                 <div class="col col-lg-3 mt-4">
                     <a href="{% url 'product_update' product.pk %}" ><button type="button"  class="btn btn-success">Update</button></a>
                 </div>
-{#                {% endif %}#}
-{#                {% if perms.webapp.delete_product %}#}
+                {% endif %}
+                {% if perms.webapp.delete_product %}
                 <div class="coL col-lg-3 mt-4">
                     <a href="{% url 'product_delete' product.pk %}" ><button type="button"  class="btn btn-danger">Delete</button></a>
                 </div>
-{#                {% endif %}#}
+                {% endif %}
                 <div class="coL col-lg-3 mt-4">
                     <a href="{% url 'product_view' product.pk %}" ><button type="button"  class="btn btn-warning"> View </button></a>
                 </div>
