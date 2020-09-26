@@ -57,3 +57,14 @@ class ReviewUpdateView(UpdateView):
     def get_success_url(self):
         review = Review.objects.get(pk=self.object.pk)
         return reverse('product_view', kwargs={'pk': review.product.pk})
+
+
+# PermissionRequiredMixin,
+class ReviewDeleteView(DeleteView):
+    model = Review
+    template_name = 'review/review_delete.html'
+    context_object_name = 'review'
+    # permission_required = 'webapp.delete_issuetracker'
+
+    def get_success_url(self):
+        return reverse("product_view", kwargs={'pk': self.object.product.pk})

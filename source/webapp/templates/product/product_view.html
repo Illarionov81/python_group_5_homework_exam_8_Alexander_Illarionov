@@ -56,9 +56,9 @@
             </div>
 {#            {% endif %}#}
         {#        {% if perms.webapp.delete_issuetracker and request.user in users %}#}
-        {#        <div class="coL col-lg-1 mt-5">#}
-        {#            <a href="{% url 'task_delete_view' task.pk %}" ><button type="submit"  class="btn btn-danger">Delete</button></a>#}
-        {#        </div>#}
+                <div class="coL col-lg-1 mt-5">
+                    <a href="{% url 'review_delete' review.pk %}" ><button type="submit"  class="btn btn-danger">Delete</button></a>
+                </div>
         {#        {% endif %}#}
         {#        <div class="coL col-lg-1 mt-5">#}
         {#            <a href="{% url 'task_view' task.pk %}" ><button type="submit"  class="btn btn-warning"> View </button></a>#}
