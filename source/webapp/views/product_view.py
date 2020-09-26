@@ -27,7 +27,7 @@ class OneProductView(DetailView):
         context = super().get_context_data(**kwargs)
         product = self.get_object()
         review, page, is_paginated = self.paginate_comments(self.object)
-        context['review'] = review
+        context['reviews'] = review
         context['page_obj'] = page
         context['is_paginated'] = is_paginated
         return context

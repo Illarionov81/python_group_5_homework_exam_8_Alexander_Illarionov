@@ -35,3 +35,25 @@ class ReviewCreateView(CreateView):
         context = super().get_context_data(**kwargs)
         context['product'] = get_object_or_404(Product, pk=self.kwargs.get('pk'),)
         return context
+
+
+# PermissionRequiredMixin,
+class ReviewUpdateView(UpdateView):
+    template_name = 'review/review_change.html'
+    form_class = ReviewForm
+    model = Review
+    context_object_name = 'review'
+    # permission_required = 'webapp.change_issuetracker'
+
+    # def has_permission(self, **kwargs):
+    #     task = get_object_or_404(IssueTracker, pk=self.kwargs.get('pk'),)
+    #     project = task.project
+    #     try:
+    #         user = project.users.get(pk=self.request.user.pk)
+    #     except ObjectDoesNotExist:
+    #         user = False
+    #     return super().has_permission() and user
+
+    def get_success_url(self):
+        review = Review.objects.get(pk=self.object.pk)
+        return reverse('product_view', kwargs={'pk': review.product.pk})
