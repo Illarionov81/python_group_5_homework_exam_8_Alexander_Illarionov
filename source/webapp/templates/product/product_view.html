@@ -3,22 +3,22 @@
 
 {% block title %}View product{% endblock %}
 {% block menu %}
-{#    {% if perms.webapp.add_issuetracker and request.user in users%}#}
+    {% if user.is_authenticated %}
         <a class="text-white text-center px-3" href="{% url 'review_create' product.pk %}">Добавить отзыв</a>
-{#    {% endif %}#}
+    {% endif %}
 {% endblock %}
 
 {% block contant %}
-    {% if user.is_authenticated %}
+
 <div class="row">
     <div class="col col-lg-12 text-center">
         <h1 class="pt-5 mt-5"><b>Product: №{{ product.pk }}.
-{#            {% if perms.webapp.change_project and request.user in users %}#}
+            {% if perms.webapp.change_product and request.user in users %}
             <a href="{% url 'product_update' product.pk %}" ><button type="button"  class="btn btn-success">Update</button></a>
-{#            {% endif %}#}
-{#            {% if perms.webapp.delete_project and request.user in users %}#}
+            {% endif %}
+            {% if perms.webapp.delete_product and request.user in users %}
             <a href="{% url 'product_delete' product.pk %}" ><button type="button"  class="btn btn-danger">Delete. </button></a>
-{#            {% endif %}#}
+            {% endif %}
         </b></h1>
         <h3> Наименование: <b class="text-primary"> {{ product.name }}. Средняя оценка: {{ avg_mark }}</b></h3>
         <div class="box">
@@ -42,6 +42,5 @@
         </div>
     </div>
         <hr>
-            {% endif %}
 {% endblock %}
 
