@@ -21,15 +21,15 @@
                     <p>{{ review.review_text }}</p>
                 </div>
             </div>
-{#                {% if perms.webapp.change_review and request.user in users %}#}
+                {% if perms.webapp.change_review or request.user in users %}
             <div class="coL col-lg-1 mt-5">
                 <a href="{% url 'review_change' review.pk %}" ><button type="submit"  class="btn btn-success">Update</button></a>
             </div>
-{#            {% endif %}#}
-{#                {% if perms.webapp.delete_review and request.user in users %}#}
+            {% endif %}
+                {% if perms.webapp.delete_review or request.user in users %}
                 <div class="coL col-lg-1 mt-5">
                     <a href="{% url 'review_delete' review.pk %}" ><button type="submit"  class="btn btn-danger">Delete</button></a>
                 </div>
-{#            {% endif %}#}
+            {% endif %}
             </div>
         {% endfor %}
