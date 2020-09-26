@@ -1,6 +1,6 @@
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.core.paginator import Paginator
-from django.db.models import Q
+from django.db.models import Q, Count, Avg
 from django.shortcuts import redirect
 from django.urls import reverse, reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
@@ -16,6 +16,21 @@ class ProductsView(ListView):
     paginate_by = 5
     paginate_orphans = 0
 
+    def get_context_data(self,  **kwargs):
+        context = super().get_context_data(**kwargs)
+        products = Product.objects.all()
+        avg_marks = []
+        for product in products:
+            avg_mark = product.review.all().aggregate(avg_mark=Avg('mark'))
+            if not avg_mark['avg_mark']:
+                avg_mark['avg_mark'] = 0
+            avg_marks.append({product.pk: avg_mark['avg_mark']})
+        context['avg_marks'] = avg_marks
+        print(avg_marks)
+        return context
+
+
+
 
 class OneProductView(DetailView):
     template_name = 'product/product_view.html'
@@ -23,10 +38,13 @@ class OneProductView(DetailView):
     paginate_review_by = 5
     paginate_review_orphans = 0
 
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        product = self.get_object()
         review, page, is_paginated = self.paginate_comments(self.object)
+        product = self.object
+        avg_mark = product.review.all().aggregate(avg_mark=Avg('mark'))
+        context['avg_mark'] = avg_mark['avg_mark']
         context['reviews'] = review
         context['page_obj'] = page
         context['is_paginated'] = is_paginated

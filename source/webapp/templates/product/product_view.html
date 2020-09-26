@@ -20,7 +20,7 @@
             <a href="{% url 'product_delete' product.pk %}" ><button type="button"  class="btn btn-danger">Delete. </button></a>
 {#            {% endif %}#}
         </b></h1>
-        <h3> Наименование: <b class="text-primary"> {{ product.name }}</b></h3>
+        <h3> Наименование: <b class="text-primary"> {{ product.name }}. Средняя оценка: {{ avg_mark }}</b></h3>
         <div class="box">
             <p >Описание: </p>
             <hr>
@@ -46,9 +46,15 @@
         {% for review in reviews %}
         <hr>
         <div class="row">
-            <div class="col col-lg-6">
-                <h3>№{{ review.pk }}. Author:{{ review.author }} | {{ review.mark }} </h3>
-                <p>{{ review.review_text }}</p>
+            <div class="col col-lg-8">
+                <h3>№{{ review.pk }}. Author: {{ review.author.first_name }} | Оценка: {{ review.mark }} </h3>
+                <p>Email: {{ review.author.email }}</p>
+                <div class="box">
+                    Отзыв:
+                    <hr>
+                    <p>{{ review.review_text }}</p>
+                </div>
+
             </div>
         {#        {% if perms.webapp.change_issuetracker and request.user in users %}#}
             <div class="coL col-lg-1 mt-5">

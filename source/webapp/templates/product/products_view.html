@@ -23,6 +23,15 @@
         <div class="col col-lg-7 pl-5">
             <h3><a href="{% url 'product_view' product.pk %}"><b>Наименование товара: {{ product.name }} </b></a> </h3>
             <p>Категория: {{ product.get_category_display}} </p>
+            {% for i in avg_marks %}
+                {% for key, value in i.items %}
+            {% if product.pk == key %}
+            <p>Средняя оценка: {{ value }}</p>
+            {% endif %}
+            {% endfor %}
+                {% endfor %}
+
+
         </div>
         <div class="col col-lg-5">
             <div class="row">

@@ -24,10 +24,13 @@ class ReviewCreateView(CreateView):
     #         user = False
     #     return super().has_permission() and user
 
+
     def form_valid(self, form):
+        user = self.request.user
         product = get_object_or_404(Product, pk=self.kwargs.get('pk'),)
         review = form.save(commit=False)
         review.product = product
+        review.author = user
         review.save()
         return redirect('product_view', pk=product.pk)
 

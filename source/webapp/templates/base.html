@@ -26,16 +26,13 @@
 {% if user.is_authenticated %}
 {#                    {% if perms.webapp.add_product %}#}
                         <a class="text-white text-center px-3" href="{% url 'product_create_view' %}">Добавить товар</a>
-{#                    {% endif %}#}
-                {% if perms.auth.view_user %}
-                <a class="text-white text-center px-3" href="{% url 'accounts:users' %}">Users</a>
-                {% endif %}
-                    {% block menu %} {% endblock %}
-                        <a class="text-white text-center px-3" href="{% url 'accounts:detail' request.user.pk %}">Hi {{ request.user.username }}</a>
-                        <a class="text-white text-center px-3" href="{% url 'accounts:logout' %}?next={{ request.get_full_path }}">Logout</a>
-                {% else %}
-                    <a class="text-white text-center px-3" href="{% url 'accounts:login' %}?next={{ request.get_full_path }}">Login</a>
-                    <a class="text-white text-center px-3"href="{% url 'accounts:create' %}?next={{ request.get_full_path }}">Sing Up</a>
+                        {% block menu %}
+                        {% endblock %}
+                            <a class="text-white text-center px-3" href="{% url 'accounts:detail' request.user.pk %}">Hi {{ request.user.username }}</a>
+                            <a class="text-white text-center px-3" href="{% url 'accounts:logout' %}?next={{ request.get_full_path }}">Logout</a>
+                    {% else %}
+                            <a class="text-white text-center px-3" href="{% url 'accounts:login' %}?next={{ request.get_full_path }}">Login</a>
+                            <a class="text-white text-center px-3"href="{% url 'accounts:create' %}?next={{ request.get_full_path }}">Sing Up</a>
                 {% endif %}
             </div>
         </div>
