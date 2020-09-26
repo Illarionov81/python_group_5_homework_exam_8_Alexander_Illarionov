@@ -30,8 +30,6 @@ class ProductsView(ListView):
         return context
 
 
-
-
 class OneProductView(DetailView):
     template_name = 'product/product_view.html'
     model = Product

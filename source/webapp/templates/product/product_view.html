@@ -31,46 +31,8 @@
             {% endif %}
             {{ product.description | linebreaks }}
         </div>
-<div class="col col-lg-12 ">
-    <h3>Отзывы:</h3>
-    <div class="row">
-        <div class="col col-lg-12">
-            {% if is_paginated %}
-                {% include 'partial/pagination.html' %}
-            {% endif %}
-        </div>
-    </div>
-</div>
-    <div class="col col-lg-12">
-    {#{% if  request.user in users %}#}
-        {% for review in reviews %}
-        <hr>
-        <div class="row">
-            <div class="col col-lg-8">
-                <h3>№{{ review.pk }}. Author: {{ review.author.first_name }} | Оценка: {{ review.mark }} </h3>
-                <p>Email: {{ review.author.email }}</p>
-                <div class="box">
-                    Отзыв:
-                    <hr>
-                    <p>{{ review.review_text }}</p>
-                </div>
-
-            </div>
-        {#        {% if perms.webapp.change_issuetracker and request.user in users %}#}
-            <div class="coL col-lg-1 mt-5">
-                <a href="{% url 'review_change' review.pk %}" ><button type="submit"  class="btn btn-success">Update</button></a>
-            </div>
-{#            {% endif %}#}
-        {#        {% if perms.webapp.delete_issuetracker and request.user in users %}#}
-                <div class="coL col-lg-1 mt-5">
-                    <a href="{% url 'review_delete' review.pk %}" ><button type="submit"  class="btn btn-danger">Delete</button></a>
-                </div>
-        {#        {% endif %}#}
-        {#        <div class="coL col-lg-1 mt-5">#}
-        {#            <a href="{% url 'task_view' task.pk %}" ><button type="submit"  class="btn btn-warning"> View </button></a>#}
-        {#        </div>#}
-            </div>
-        {% endfor %}
+<h2 class="text-center clear">Отзывы:</h2>
+    {% include 'partial/review_list.html'  with reviews=reviews%}
         {#        {% endif %}#}
         <hr>
         <div class="col col-lg-12">

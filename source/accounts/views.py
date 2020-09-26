@@ -59,24 +59,24 @@ class UserDetailView(LoginRequiredMixin, DetailView):
     paginate_project_by = 5
     paginate_project_orphans = 0
 
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     user = self.get_object()
-    #     projects_list, page, is_paginated = self.paginate_comments(user)
-    #     context['projects_list'] = projects_list
-    #     context['page_obj'] = page
-    #     context['is_paginated'] = is_paginated
-    #     return context
-    #
-    # def paginate_comments(self, user):
-    #     project = user.project.filter(is_deleted=False).order_by('starts_date')
-    #     if project.count() > 0:
-    #         paginator = Paginator(project, self.paginate_project_by, orphans=self.paginate_project_orphans)
-    #         page = paginator.get_page(self.request.GET.get('page', 1))
-    #         is_paginated = paginator.num_pages > 1
-    #         return page.object_list, page, is_paginated
-    #     else:
-    #         return project, None, False
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        user = self.get_object()
+        reviews, page, is_paginated = self.paginate_comments(user)
+        context['reviews'] = reviews
+        context['page_obj'] = page
+        context['is_paginated'] = is_paginated
+        return context
+
+    def paginate_comments(self, user):
+        reviews = user.review.all()
+        if reviews.count() > 0:
+            paginator = Paginator(reviews, self.paginate_project_by, orphans=self.paginate_project_orphans)
+            page = paginator.get_page(self.request.GET.get('page', 1))
+            is_paginated = paginator.num_pages > 1
+            return page.object_list, page, is_paginated
+        else:
+            return reviews, None, False
 
 
 class AllUserView(PermissionRequiredMixin, ListView):

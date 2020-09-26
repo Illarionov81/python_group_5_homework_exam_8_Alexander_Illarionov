@@ -14,13 +14,11 @@
     {% if user_obj.profile.avatar %}
         <img class="avatar" src="{{ user_obj.profile.avatar.url }}" width="250" height="250" alt="user picture">
     {% endif %}
-    <p>Имя пользователя: {{ user.username }}</p>
+    <p>Login: {{ user.username }}</p>
     <p>Имя: {{ user.first_name }}</p>
     <p>Фамилия: {{ user.last_name }}</p>
-    <p>Профиль на GitHub: <a href="{{ user_obj.profile.git_hub }}">{{ user_obj.profile.git_hub }}</a></p>
     <p>Почта: {{ user_obj.email }}</p>
-    <p>О себе: {{ user_obj.profile.about_me }}</p>
 
-    <h2 class="text-center clear">Проекты в которых участвует:</h2>
-{#    {% include 'partial/projects_list.html'  with projects_list=projects_list%}#}
+    <h2 class="text-center clear">Отзывы:</h2>
+    {% include 'partial/review_list.html'  with reviews=reviews%}
 {% endblock %}
