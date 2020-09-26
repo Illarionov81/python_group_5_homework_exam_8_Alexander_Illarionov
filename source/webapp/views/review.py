@@ -1,4 +1,4 @@
-from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.paginator import Paginator
 from django.db.models import Q
@@ -10,21 +10,10 @@ from webapp.forms import ProductForm, ReviewForm
 from webapp.models import Product, Review
 
 
-# PermissionRequiredMixin,
-class ReviewCreateView(CreateView):
+class ReviewCreateView(LoginRequiredMixin, CreateView):
     model = Review
     template_name = 'review/review_add.html'
     form_class = ReviewForm
-    # permission_required = 'webapp.add_issuetracker'
-
-    # def has_permission(self, **kwargs):
-    #     project = get_object_or_404(Project, pk=self.kwargs.get('pk'),)
-    #     try:
-    #         user = project.users.get(pk=self.request.user.pk)
-    #     except ObjectDoesNotExist:
-    #         user = False
-    #     return super().has_permission() and user
-
 
     def form_valid(self, form):
         user = self.request.user
@@ -49,12 +38,8 @@ class ReviewUpdateView(PermissionRequiredMixin, UpdateView):
     permission_required = 'webapp.change_review'
 
     def has_permission(self, **kwargs):
-        review = get_object_or_404(Review, pk=self.kwargs.get('pk'),)
-        try:
-            user = review.author.get(pk=self.request.user.pk)
-        except ObjectDoesNotExist:
-            user = False
-        return super().has_permission() and user
+        review = get_object_or_404(Review, pk=self.kwargs.get('pk'), )
+        return super().has_permission() or review.author == self.request.user
 
     def get_success_url(self):
         review = Review.objects.get(pk=self.object.pk)
@@ -68,13 +53,11 @@ class ReviewDeleteView(PermissionRequiredMixin, DeleteView):
     permission_required = 'webapp.delete_review'
 
     def has_permission(self, **kwargs):
-        review = get_object_or_404(Review, pk=self.kwargs.get('pk'),)
-        try:
-            user = review.author.get(pk=self.request.user.pk)
-        except ObjectDoesNotExist:
-            user = False
-        return super().has_permission() and user
-
+        review = get_object_or_404(Review, pk=self.kwargs.get('pk'), )
+        return super().has_permission() or review.author == self.request.user
 
     def get_success_url(self):
-        return reverse("product_view", kwargs={'pk': self.object.product.pk})
+        review = Review.objects.get(pk=self.object.pk)
+        return reverse('product_view', kwargs={'pk': review.product.pk})
+
+

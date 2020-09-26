@@ -26,7 +26,6 @@ class ProductsView(ListView):
                 avg_mark['avg_mark'] = 0
             avg_marks.append({product.pk: avg_mark['avg_mark']})
         context['avg_marks'] = avg_marks
-        print(avg_marks)
         return context
 
 

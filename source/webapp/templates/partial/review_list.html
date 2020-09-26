@@ -13,7 +13,8 @@
         <hr>
         <div class="row">
             <div class="col col-lg-8">
-                <h3><a href="{% url 'accounts:detail' review.author.pk %}">№{{ review.pk }}. Author: {{ review.author.first_name }}</a> | Оценка: {{ review.mark }} </h3>
+                <h3><a href="{% url 'accounts:detail' review.author.pk %}">№{{ review.pk }}.
+                    Author: {{ review.author.first_name }}</a> | Оценка: {{ review.mark }} </h3>
                 <p>Email: {{ review.author.email }}</p>
                 <div class="box">
                     Отзыв:
