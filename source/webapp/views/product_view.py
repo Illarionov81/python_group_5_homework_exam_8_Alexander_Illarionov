@@ -1,4 +1,5 @@
 from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.core.paginator import Paginator
 from django.db.models import Q
 from django.shortcuts import redirect
 from django.urls import reverse, reverse_lazy
@@ -15,7 +16,30 @@ class ProductsView(ListView):
     paginate_orphans = 0
 
 
+class OneProductView(DetailView):
+    template_name = 'product/product_view.html'
+    model = Product
+    paginate_review_by = 5
+    paginate_review_orphans = 0
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        product = self.get_object()
+        review, page, is_paginated = self.paginate_comments(self.object)
+        context['review'] = review
+        context['page_obj'] = page
+        context['is_paginated'] = is_paginated
+        return context
+
+    def paginate_comments(self, project):
+        review = project.review.all()
+        if review.count() > 0:
+            paginator = Paginator(review, self.paginate_review_by, orphans=self.paginate_review_orphans)
+            page = paginator.get_page(self.request.GET.get('page', 1))
+            is_paginated = paginator.num_pages > 1
+            return page.object_list, page, is_paginated
+        else:
+            return review, None, False
 
 
 
