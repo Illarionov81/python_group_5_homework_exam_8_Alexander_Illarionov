@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block title %}Products: {% endblock %}
+
+{% block contant %}
+<hr>
+<div class="row text-center">
+    <div class="col col-lg-12 ml-5 mt-3">
+        {% if is_paginated %}
+            {% include 'partial/pagination.html' %}
+        {% endif %}
+    </div>
+</div>
+<hr>
+    <div class="row">
+        <div class="col col-lg-6 ml-5">
+            <h1 class="pt-4"><b>Products: </b></h1>
+        </div>
+    </div>
+    <hr>
+{% for product in products_list %}
+    <div class="row">
+        <div class="col col-lg-7 pl-5">
+{#            <h3><a href="{% url 'product_view' product.pk %}"><b>Наименование товара: {{ product.name }} </b></a> </h3>#}
+            <b>Наименование товара: {{ product.name }} </b>
+            <p>Категория: {{ product.get_category_display}} </p>
+        </div>
+{#        <div class="col col-lg-5">#}
+{#            <div class="row">#}
+{#                {% if perms.webapp.change_product %}#}
+{#                <div class="col col-lg-3 mt-4">#}
+{#                    <a href="{% url 'product_update' product.pk %}" ><button type="button"  class="btn btn-success">Update</button></a>#}
+{#                </div>#}
+{#                {% endif %}#}
+{#                {% if perms.webapp.delete_product %}#}
+{#                <div class="coL col-lg-3 mt-4">#}
+{#                    <a href="{% url 'product_delete' product.pk %}" ><button type="button"  class="btn btn-danger">Delete</button></a>#}
+{#                </div>#}
+{#                {% endif %}#}
+{#                <div class="coL col-lg-3 mt-4">#}
+{#                    <a href="{% url 'product_view' product.pk %}" ><button type="button"  class="btn btn-warning"> View </button></a>#}
+{#                </div>#}
+{#            </div>#}
+{#            <form action="{% url 'add_to_basket' product.pk %}" method="POST">#}
+{#                {% csrf_token %}#}
+{#                <div class="coL col-lg-8 mt-4">#}
+{#                    <label >#}
+{#                        Qty: <input type="number" name="amount">#}
+{#                    </label>#}
+{#                    <input type="submit" value="Add to basket">#}
+{#                </div>#}
+{#            </form>#}
+{#        </div>#}
+    </div>
+    <hr>
+{% endfor %}
+{% if is_paginated %}
+    {% include 'partial/pagination.html' %}
+{% endif %}
+<hr>
+{% endblock %}
