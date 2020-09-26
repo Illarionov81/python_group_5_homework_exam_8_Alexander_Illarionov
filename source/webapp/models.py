@@ -9,8 +9,7 @@ CATEGORY_CHOICES = (
     ('household', 'Хоз. товары'),
     ('toys', 'Детские игрушки'),
     ('appliances', 'Бытовая техника'),
-    ('carshering', 'Аренда авто'),
-    ('laundry', 'Прачечная'),
+    ('services', 'Услуги'),
 )
 
 MARK_CHOICES = (

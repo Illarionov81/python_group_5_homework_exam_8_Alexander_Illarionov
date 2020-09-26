@@ -5,6 +5,7 @@ from django.shortcuts import redirect
 from django.urls import reverse, reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 
+from webapp.forms import ProductForm
 from webapp.models import Product
 
 
@@ -42,4 +43,11 @@ class OneProductView(DetailView):
             return review, None, False
 
 
+class ProductCreateView(PermissionRequiredMixin, CreateView):
+    model = Product
+    template_name = 'product/product_create.html'
+    form_class = ProductForm
+    permission_required = 'webapp.add_product'
 
+    def get_success_url(self):
+        return reverse('product_view', kwargs={'pk': self.object.pk})
