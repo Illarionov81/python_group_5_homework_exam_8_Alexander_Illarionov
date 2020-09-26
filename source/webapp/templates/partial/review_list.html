@@ -8,7 +8,7 @@
     </div>
 </div>
     <div class="col col-lg-12">
-    {% if  request.user in users %}
+
         {% for review in reviews %}
         <hr>
         <div class="row">
@@ -33,4 +33,3 @@
             {% endif %}
             </div>
         {% endfor %}
-    {% endif %}
