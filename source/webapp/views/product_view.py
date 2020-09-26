@@ -51,3 +51,14 @@ class ProductCreateView(PermissionRequiredMixin, CreateView):
 
     def get_success_url(self):
         return reverse('product_view', kwargs={'pk': self.object.pk})
+
+
+# PermissionRequiredMixin,
+class ProductUpdateView(UpdateView):
+    model = Product
+    template_name = 'product/product_update.html'
+    form_class = ProductForm
+    # permission_required = 'webapp.change_product'
+
+    def get_success_url(self):
+        return reverse('product_view', kwargs={'pk': self.object.pk})

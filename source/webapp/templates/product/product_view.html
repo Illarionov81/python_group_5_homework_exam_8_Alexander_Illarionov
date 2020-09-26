@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load staticfiles %}
 
 {% block title %}View product{% endblock %}
 {% block menu %}
@@ -13,82 +14,58 @@
     <div class="col col-lg-12 text-center">
         <h1 class="pt-5 mt-5"><b>Product: №{{ product.pk }}.
 {#            {% if perms.webapp.change_project and request.user in users %}#}
-{#            <a href="{% url 'project_update' project.pk %}" ><button type="button"  class="btn btn-success">Update</button></a>#}
+            <a href="{% url 'product_update' product.pk %}" ><button type="button"  class="btn btn-success">Update</button></a>
 {#            {% endif %}#}
 {#            {% if perms.webapp.delete_project and request.user in users %}#}
-{#            <a href="{% url 'project_delete' project.pk %}" ><button type="button"  class="btn btn-danger">Delete. </button></a>#}
+{#            <a href="{% url 'product_delete' project.pk %}" ><button type="button"  class="btn btn-danger">Delete. </button></a>#}
 {#            {% endif %}#}
         </b></h1>
         <h3> Наименование: <b class="text-primary"> {{ product.name }}</b></h3>
         <div class="box">
             <p >Описание: </p>
             <hr>
+            {% if not product.image %}
+            <img src="{% static "img/product.jpg" %}" alt="Продукт">
+            {% else %}
+             {{ product.image }}
+            {% endif %}
             {{ product.description | linebreaks }}
-{#    <div class="col col-lg-3 box pl-3 mt-5 pt-5 mr-1">#}
-{#        <div class="row1">#}
-{#            <b class="pt-5 mt-5 pl-3 pr-5">Users:</b>#}
-{#            {% if perms.webapp.change_users and request.user in users %}#}
-{#            <a class="pl-5" href="{% url 'update_users_in_project' project.pk %}">#}
-{#            <button type="button"  class="btn btn-warning ">Update</button>#}
-{#            </a>#}
-{#            {% endif %}#}
-{#        </div>#}
-{#        <div class="row2">#}
-{#            <hr>#}
-{#            {% for user in users %}#}
-{#            № <a href="{% url 'accounts:detail' user.pk %}">{{ user.pk }} - {{ user.username }}</a><br>#}
-{#            {% endfor %}#}
-{#        </div>#}
-{#    </div>#}
-</div>
-<hr>
-<div class="col col-lg-12 box ">
-    <h3>Отзывы:</h3>
-    <div class="row">
+        </div>
+        <hr>
+        <div class="col col-lg-12 box ">
+            <h3>Отзывы:</h3>
+            <div class="row">
+                <div class="col col-lg-12">
+                    {% if is_paginated %}
+                        {% include 'partial/pagination.html' %}
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col col-lg-12">
+            {#{% if  request.user in users %}#}
+                {% for review in review %}
+                <hr>
+            <div class="row">
+                <div class="col col-lg-12">
+            {#            <h3><a href="{% url 'task_view' task.pk %}">№{{ task.pk }}. Status: <b>{{ task.status.get_status_display }}</b></a> </h3>#}
+                    <h3>№{{ review.pk }}</h3>
+                    <p>Автор: {{ review.author }} | Оценка: {{ review.mark }}</p>
+                    <div class="col col-lg-12">
+                        {{ review.review_text }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        <hr>
         <div class="col col-lg-12">
             {% if is_paginated %}
                 {% include 'partial/pagination.html' %}
             {% endif %}
         </div>
     </div>
-    <div class="col col-lg-12">
-    {#{% if  request.user in users %}#}
-        {% for review in review %}
-        <hr>
-    <div class="row">
-        <div class="col col-lg-12">
-    {#            <h3><a href="{% url 'task_view' task.pk %}">№{{ task.pk }}. Status: <b>{{ task.status.get_status_display }}</b></a> </h3>#}
-            <h3>№{{ review.pk }}</h3>
-            <p>Автор: {{ review.author }} | Оценка: {{ review.mark }}</p>
-            <div class="col col-lg-12">
-                {{ review.review_text }}
-            </div>
-        </div>
-    </div>
-{#        {% if perms.webapp.change_issuetracker and request.user in users %}#}
-{#        <div class="coL col-lg-1 mt-5">#}
-{#            <a href="{% url 'task_update_view' task.pk %}" ><button type="submit"  class="btn btn-success">Update</button></a>#}
-{#        </div>#}
-{#        {% endif %}#}
-{#        {% if perms.webapp.delete_issuetracker and request.user in users %}#}
-{#        <div class="coL col-lg-1 mt-5">#}
-{#            <a href="{% url 'task_delete_view' task.pk %}" ><button type="submit"  class="btn btn-danger">Delete</button></a>#}
-{#        </div>#}
-{#        {% endif %}#}
-{#        <div class="coL col-lg-1 mt-5">#}
-{#            <a href="{% url 'task_view' task.pk %}" ><button type="submit"  class="btn btn-warning"> View </button></a>#}
-{#        </div>#}
-{#    </div>#}
-    {% endfor %}
-{#    {% endif %}#}
-    <hr>
-    <div class="col col-lg-12">
-        {% if is_paginated %}
-            {% include 'partial/pagination.html' %}
-        {% endif %}
-    </div>
-</div>
     <hr>
     {% endif %}
+</div>
 {% endblock %}
 

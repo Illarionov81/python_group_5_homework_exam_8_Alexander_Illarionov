@@ -25,11 +25,11 @@
             <p>Категория: {{ product.get_category_display}} </p>
         </div>
         <div class="col col-lg-5">
-{#            <div class="row">#}
+            <div class="row">
 {#                {% if perms.webapp.change_product %}#}
-{#                <div class="col col-lg-3 mt-4">#}
-{#                    <a href="{% url 'product_update' product.pk %}" ><button type="button"  class="btn btn-success">Update</button></a>#}
-{#                </div>#}
+                <div class="col col-lg-3 mt-4">
+                    <a href="{% url 'product_update' product.pk %}" ><button type="button"  class="btn btn-success">Update</button></a>
+                </div>
 {#                {% endif %}#}
 {#                {% if perms.webapp.delete_product %}#}
 {#                <div class="coL col-lg-3 mt-4">#}
@@ -39,6 +39,7 @@
                 <div class="coL col-lg-3 mt-4">
                     <a href="{% url 'product_view' product.pk %}" ><button type="button"  class="btn btn-warning"> View </button></a>
                 </div>
+            </div>
         </div>
     </div>
     <hr>
