@@ -1,5 +1,5 @@
 
-<form action="{{ action_url }}" method="{{ form_method }}">
+<form action="{{ action_url }}" method="{{ form_method }}" enctype="multipart/form-data">
         {% csrf_token %}
         {% for error in form.non_field_errors %}
         <p class="error">{{ error }}</p>

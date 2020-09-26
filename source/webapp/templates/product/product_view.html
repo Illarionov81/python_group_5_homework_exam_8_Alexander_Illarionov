@@ -27,7 +27,7 @@
             {% if not product.image %}
             <img src="{% static "img/product.jpg" %}" alt="Продукт">
             {% else %}
-             {{ product.image }}
+                <img src="{{product.image.url }}" width="300" height="200" alt="Foto">
             {% endif %}
             {{ product.description | linebreaks }}
         </div>
