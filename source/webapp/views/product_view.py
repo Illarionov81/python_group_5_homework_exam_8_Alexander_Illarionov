@@ -62,3 +62,11 @@ class ProductUpdateView(UpdateView):
 
     def get_success_url(self):
         return reverse('product_view', kwargs={'pk': self.object.pk})
+
+
+# PermissionRequiredMixin,
+class ProductDeleteView(DeleteView):
+    model = Product
+    template_name = 'product/product_delete.html'
+    success_url = reverse_lazy('products')
+    # permission_required = 'webapp.delete_product'
